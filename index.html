@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>副業×AI 時短プロンプト30選</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a2e;
+  --paper: #faf8f3;
+  --cream: #f0ece0;
+  --gold: #c9a84c;
+  --gold-light: #e8d5a3;
+  --gold-pale: #fdf6e3;
+  --accent: #2d6a4f;
+  --accent-light: #52b788;
+  --red: #c1121f;
+  --muted: #6b6560;
+  --border: #ddd8cc;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+  line-height: 1.8;
+  min-height: 100vh;
+}
+
+/* ── 装飾パターン背景 ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(201,168,76,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(45,106,79,0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 20px 80px; }
+
+/* ── ヘッダー ── */
+.hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--gold));
+}
+.hero-label {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  border: 1px solid var(--gold-light);
+  padding: 5px 16px;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+.hero h1 {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(26px, 6vw, 38px);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.hero h1 span {
+  color: var(--gold);
+}
+.hero-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+.hero-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto;
+  max-width: 300px;
+}
+.hero-divider::before,
+.hero-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.hero-divider span {
+  font-size: 16px;
+  color: var(--gold);
+}
+
+/* ── 使い方カード ── */
+.how-to {
+  background: var(--gold-pale);
+  border: 1px solid var(--gold-light);
+  border-radius: 2px;
+  padding: 24px 28px;
+  margin: 32px 0;
+  position: relative;
+}
+.how-to::before {
+  content: 'HOW TO USE';
+  position: absolute;
+  top: -10px; left: 20px;
+  background: var(--gold-pale);
+  padding: 0 8px;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  font-weight: 500;
+}
+.how-to p {
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 2;
+}
+.how-to strong {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* ── カテゴリタブ ── */
+.cat-nav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 36px 0 24px;
+  justify-content: center;
+}
+.cat-btn {
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 2px;
+  font-weight: 400;
+}
+.cat-btn.active, .cat-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+/* ── カテゴリセクション ── */
+.cat-section {
+  margin-bottom: 48px;
+}
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.cat-letter {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  width: 36px;
+  flex-shrink: 0;
+}
+.cat-info h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.5px;
+}
+.cat-info p {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ── プロンプトカード ── */
+.prompt-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.prompt-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.card-num {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  min-width: 32px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.card-title-wrap { flex: 1; }
+.card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.card-aim {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 500;
+}
+.card-toggle {
+  font-size: 18px;
+  color: var(--muted);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.prompt-card.open .card-toggle { transform: rotate(45deg); }
+
+.card-body {
+  display: none;
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--cream);
+}
+.prompt-card.open .card-body { display: block; }
+
+.prompt-box {
+  background: var(--ink);
+  color: #e8e8e8;
+  padding: 16px 18px;
+  font-size: 12px;
+  line-height: 1.9;
+  border-radius: 2px;
+  margin: 14px 0 12px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-family: 'Noto Sans JP', sans-serif;
+  position: relative;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #ccc;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+.copy-btn:hover { background: rgba(255,255,255,0.22); color: white; }
+.copy-btn.copied { background: var(--accent); color: white; }
+
+.card-tip {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 10px 14px;
+  background: var(--cream);
+  border-left: 2px solid var(--gold);
+  line-height: 1.8;
+}
+.card-tip strong { color: var(--ink); font-weight: 500; }
+
+/* ── フッター ── */
+.footer {
+  text-align: center;
+  padding: 48px 20px 24px;
+  border-top: 1px solid var(--border);
+  margin-top: 48px;
+}
+.footer-logo {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.footer-handle {
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+.footer-note {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 2;
+}
+
+/* ── 3ステップ ── */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 28px 0;
+}
+.step {
+  text-align: center;
+  padding: 16px 10px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+}
+.step-n {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 6px;
+}
+.step p { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+@media (max-width: 500px) {
+  .steps { grid-template-columns: 1fr; }
+  .cat-nav { gap: 4px; }
+  .cat-btn { font-size: 11px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">LINE限定配布</div>
+  <h1>副業×AI<br><span>時短プロンプト</span> 30選</h1>
+  <p class="hero-sub">ChatGPT中心・コピペでそのまま使える実戦版<br>by コア｜AI知識×時短 @lab_ai_core</p>
+  <div class="hero-divider"><span>✦</span></div>
+</div>
+
+<!-- HOW TO USE -->
+<div class="how-to">
+  <p>すべてのプロンプトは<strong>そのままChatGPTに貼り付けて使える形</strong>になっています。<br>
+  <strong>◯◯</strong>の部分だけ自分の状況に合わせて書き換えてください。<br><br>
+  迷ったら <strong>A → E → B</strong> の順で試すのがおすすめです。</p>
+</div>
+
+<!-- 3 STEPS -->
+<div class="steps">
+  <div class="step"><span class="step-n">01</span><p>気になるカテゴリから<br>1つだけ選ぶ</p></div>
+  <div class="step"><span class="step-n">02</span><p>今日の作業で<br>1回だけ試す</p></div>
+  <div class="step"><span class="step-n">03</span><p>1週間後、使えた3つだけ<br>残して他は忘れる</p></div>
+</div>
+
+<!-- CAT NAV -->
+<div class="cat-nav">
+  <button class="cat-btn active" onclick="filterCat('all')">すべて</button>
+  <button class="cat-btn" onclick="filterCat('A')">A. 案件獲得</button>
+  <button class="cat-btn" onclick="filterCat('B')">B. 顧客対応</button>
+  <button class="cat-btn" onclick="filterCat('C')">C. 納品物作成</button>
+  <button class="cat-btn" onclick="filterCat('D')">D. SNS・集客</button>
+  <button class="cat-btn" onclick="filterCat('E')">E. 業務効率化</button>
+  <button class="cat-btn" onclick="filterCat('F')">F. 金銭・判断</button>
+</div>
+
+<!-- CATEGORY A -->
+<div class="cat-section" data-cat="A">
+  <div class="cat-header">
+    <div class="cat-letter">A</div>
+    <div class="cat-info"><h2>案件獲得・提案</h2><p>案件を取る段階でAIを使うと、時給が一番上がります</p></div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">01</div>
+      <div class="card-title-wrap">
+        <div class="card-title">受かる提案文のたたき台を3秒で作る</div>
+        <div class="card-aim">クラウドワークス・ランサーズで「また同じ文…」を卒業する</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>あなたはプロの副業コンサルタントです。
+以下の案件に対して、受注率が高い提案文のたたき台を3パターン作ってください。
+
+【案件情報】
+・タイトル: ◯◯
+・内容: ◯◯
+・予算: ◯◯
+・納期: ◯◯
+
+【私の情報】
+・スキル: ◯◯
+・実績: ◯◯（なければ「実績なし」と書いてOK）
+
+各パターンごとに「どんな発注者向けか」も一言で書いてください。</div>
+      <div class="card-tip"><strong>コツ:</strong> 3案のうち一番しっくり来るものをベースに、自分の言葉で整えるだけで完成度が跳ね上がります。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">02</div>
+      <div class="card-title-wrap">
+        <div class="card-title">自分の強みを「買われる形」に言語化</div>
+        <div class="card-aim">プロフィール・提案文の軸を作る</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>私の経歴と得意なことを整理しました。
+これを副業クライアントに「お金を払いたくなる強み」として、3つの切り口で言語化してください。
+
+【経歴・得意なこと】
+・◯◯
+・◯◯
+・◯◯
+
+各切り口について、次の形式でお願いします。
+1. キャッチコピー（1行）
+2. なぜそれが強みなのか（2〜3行）
+3. どんな依頼に向いているか（1行）</div>
+      <div class="card-tip"><strong>コツ:</strong> 出てきたキャッチコピーは、SNSプロフィールにもそのまま流用できます。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">03</div>
+      <div class="card-title-wrap">
+        <div class="card-title">実績ゼロでも刺さるポートフォリオ文</div>
+        <div class="card-aim">副業開始直後の「実績の壁」を突破する</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>私はまだ副業の実績がありません。
+でも以下のスキル/経験があります。これを「発注者が安心して任せられる形」のポートフォリオ文に変換してください。
+
+【スキル・経験】
+・◯◯
+・◯◯
+・◯◯（本業・趣味・家事・学生時代の活動でもOK）
+
+条件:
+・嘘は書かない
+・「実績なし」と正直に書きつつ、任せる安心感が伝わる構成
+・400文字以内</div>
+      <div class="card-tip"><strong>コツ:</strong> 「本業の経験」「家事・育児での工夫」も立派な素材です。出し惜しみしないでAIに渡してください。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">04</div>
+      <div class="card-title-wrap">
+        <div class="card-title">案件の怪しさを5観点でチェック</div>
+        <div class="card-aim">詐欺・搾取案件を踏まない</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下の副業案件について、怪しい点・搾取の可能性を5観点でチェックしてください。
+
+【案件情報】
+◯◯（案件ページの文章をそのまま貼る）
+
+5観点:
+1. 単価と作業量のバランス
+2. 発注者の情報開示の度合い
+3. 連絡手段と契約方法
+4. 前払い/後払いの条件
+5. 「誰でも稼げる」系の表現があるか
+
+各観点で 赤/黄/緑 の信号で評価し、最後に「受けるべきか」の総合判断を1行でください。</div>
+      <div class="card-tip"><strong>コツ:</strong> 少しでも黄信号が多いと感じたら受けない。AIの判断は「セカンドオピニオン」として使うのが正解です。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">05</div>
+      <div class="card-title-wrap">
+        <div class="card-title">競合提案者を超える「追加の一言」を発見</div>
+        <div class="card-aim">同じ案件に応募する他の人と差をつける</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下の案件に対して、多くの応募者が書きそうな「平均的な提案文」を想像してください。
+そのうえで、「その一歩先」に行くために追記すべき要素を3つ教えてください。
+
+【案件情報】
+◯◯
+
+出力:
+1. 平均的な提案文のサンプル（200字）
+2. 追記すべき要素3つ（発注者が読んだ瞬間に心が動く角度で）
+3. それぞれの追記例（そのまま使える短文で）</div>
+      <div class="card-tip"><strong>コツ:</strong> 3つの追記のうち1つ入れるだけで、同じ価格帯の競合より選ばれやすくなります。</div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORY B -->
+<div class="cat-section" data-cat="B">
+  <div class="cat-header">
+    <div class="cat-letter">B</div>
+    <div class="cat-info"><h2>顧客対応・コミュニケーション</h2><p>「返信の下書き」を任せるだけで、1日1時間は浮きます</p></div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">06</div>
+      <div class="card-title-wrap">
+        <div class="card-title">失礼にならない断り方</div>
+        <div class="card-aim">無理な依頼を角を立てずに断る</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下の依頼を、関係を壊さずに断りたいです。
+丁寧で、かつ「また次につながる」言い回しで、3パターン作ってください。
+
+【依頼内容】
+◯◯
+
+【断りたい理由（そのままは使わない）】
+◯◯
+
+条件:
+・言い訳がましくしない
+・「代替案」か「次の機会への接続」を1つ入れる
+・200文字前後</div>
+      <div class="card-tip"><strong>コツ:</strong> 「代替案」を入れるだけで、印象が180度変わります。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">07</div>
+      <div class="card-title-wrap">
+        <div class="card-title">追加料金を請求するときの言い方</div>
+        <div class="card-aim">範囲外作業を「サービス」で終わらせない</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下の状況で、追加料金を請求するメール文を作ってください。
+相手に不快感を与えず、「それは確かに追加料金だね」と納得してもらえる流れで。
+
+【状況】
+・当初の依頼: ◯◯
+・実際に頼まれたこと: ◯◯
+・追加料金として請求したい金額: ◯◯円
+
+構成:
+1. 前置き（相手への感謝）
+2. 当初の範囲の確認
+3. 今回の依頼がどう範囲外か
+4. 追加料金の提示
+5. 次の進め方の提案</div>
+      <div class="card-tip"><strong>コツ:</strong> 「範囲外」と言い切るのでなく「当初のご依頼内容と少し違うので」と柔らかく伝えるのがポイント。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">08</div>
+      <div class="card-title-wrap">
+        <div class="card-title">納期遅延を信頼を壊さず伝える</div>
+        <div class="card-aim">ピンチを最小ダメージで乗り切る</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>納期に間に合いそうにありません。クライアントに遅延連絡をしたいです。
+信頼を極力壊さない伝え方で、メール文を作ってください。
+
+【状況】
+・当初納期: ◯◯
+・現実的な新納期: ◯◯
+・遅延理由（正直に書く）: ◯◯
+
+構成:
+1. 結論（いつまで遅れるか）を最初に
+2. 理由（言い訳にならない粒度で）
+3. 今から取るリカバリー策
+4. 誠意を示す提案
+5. 最後にもう一度お詫び</div>
+      <div class="card-tip"><strong>コツ:</strong> 遅延連絡は「早ければ早いほど」信頼は残ります。AIを使ってすぐ送るのが最適解。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">09</div>
+      <div class="card-title-wrap">
+        <div class="card-title">修正依頼の範囲を確定させる質問</div>
+        <div class="card-aim">無限修正の地獄を防ぐ</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>クライアントから以下の修正依頼が来ました。
+このままだと範囲が曖昧で、追加作業が無限に続きそうです。
+
+範囲を確定させるための確認質問を5つ作ってください。
+「相手に優しく、でも本質的に範囲を決められる」問い方で。
+
+【修正依頼の文面】
+◯◯（相手から来たメッセージをそのまま貼る）</div>
+      <div class="card-tip"><strong>コツ:</strong> 質問を投げた時点で、相手も「どこまで求めているか」を言語化します。これで無限修正が止まります。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">10</div>
+      <div class="card-title-wrap">
+        <div class="card-title">請求書の催促を角を立てずに</div>
+        <div class="card-aim">支払い遅延にうまく対応する</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下の案件の請求書を送ってから◯日経ちますが、支払いがまだです。
+
+相手を疑う前提ではなく、「もしかして見落としてませんか？」のトーンで、丁寧な催促メールを作ってください。
+
+【案件情報】
+・金額: ◯◯円
+・請求書送付日: ◯◯
+・支払い期日: ◯◯
+
+構成:
+1. 前置き
+2. 請求書送付の事実確認
+3. 支払い状況の確認依頼
+4. 何か問題があれば教えてほしい旨
+5. 締めの感謝</div>
+      <div class="card-tip"><strong>コツ:</strong> 最初の催促はとにかく柔らかく。2回目以降は少し強めに、と段階を踏むのが安全です。</div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORY C -->
+<div class="cat-section" data-cat="C">
+  <div class="cat-header">
+    <div class="cat-letter">C</div>
+    <div class="cat-info"><h2>納品物作成</h2><p>「手を動かす時間」を削る5個</p></div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">11</div>
+      <div class="card-title-wrap">
+        <div class="card-title">ブログ記事の章構成を5分で作る</div>
+        <div class="card-aim">記事制作の「最初の詰まり」をなくす</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下のテーマでブログ記事を書きます。
+読者が最後まで読んで「保存したくなる」章構成を作ってください。
+
+【テーマ】◯◯
+【想定読者】◯◯（例: 副業を始めたい30代会社員）
+【文字数目安】◯◯字
+
+出力:
+1. タイトル案3つ
+2. 章構成（H2レベル5〜7個）
+3. 各章に入れる要素メモ
+4. 導入文のたたき台（200字）
+5. 締めくくりの方向性（一言）</div>
+      <div class="card-tip"><strong>コツ:</strong> 構成さえ決まれば、本文は章ごとにAIに「肉付け」させることで、1記事2時間→30分に短縮できます。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">12</div>
+      <div class="card-title-wrap">
+        <div class="card-title">キャッチコピー案を大量生成</div>
+        <div class="card-aim">思考のネタ切れを埋める</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下の商品/サービスのキャッチコピー案を20個作ってください。
+
+【商品/サービス】◯◯
+【ターゲット】◯◯
+【強み3つ】
+・◯◯  ・◯◯  ・◯◯
+
+20個のうち、次の分類で出してください:
+- ベネフィット直撃型 5個
+- 数字で信頼構築型 5個
+- 共感型 5個
+- 逆張り/意外性型 5個</div>
+      <div class="card-tip"><strong>コツ:</strong> 20個一気に出して、相性のいい1〜2個を選ぶ使い方が一番ラクです。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">13</div>
+      <div class="card-title-wrap">
+        <div class="card-title">写真1枚から商品説明文を作る</div>
+        <div class="card-aim">ECサイト・メルカリ・商品紹介系の時短</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>（ChatGPTに商品画像をアップロードして）
+
+画像の商品について、次の形式で商品説明文を作ってください。
+
+1. キャッチコピー（20字以内）
+2. 商品の特徴3つ（各50字以内）
+3. どんな人に向いているか（3パターン）
+4. 使用シーンの提案（2つ）
+5. 購入のハードルを下げる一言（20字）
+
+トーン: 信頼感重視、誇張なし</div>
+      <div class="card-tip"><strong>コツ:</strong> ChatGPTの無料版でも画像アップロードができます。メルカリ転売・ハンドメイド販売で強力。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">14</div>
+      <div class="card-title-wrap">
+        <div class="card-title">議事録を整文する</div>
+        <div class="card-aim">文字起こし後の「そこからの時間」を削る</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下は会議の文字起こしです（乱雑な状態）。
+これを読みやすい議事録に整文してください。
+
+【文字起こし】
+◯◯（音声入力で起こした文章をそのまま）
+
+出力形式:
+1. 会議の目的（1行で）
+2. 決定事項（箇条書き）
+3. 宿題・TODO（担当者と期限付き）
+4. 次回までの論点
+5. 議論の要旨（300字以内）</div>
+      <div class="card-tip"><strong>コツ:</strong> 長時間の会議でも1〜2分で整形されます。議事録代行案件で即戦力。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">15</div>
+      <div class="card-title-wrap">
+        <div class="card-title">動画台本の骨子を作る</div>
+        <div class="card-aim">YouTube副業・動画編集受注の骨格づくり</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>YouTube動画の台本の骨子を作ってください。
+
+【テーマ】◯◯
+【動画の長さ】◯分
+【想定視聴者】◯◯
+
+出力:
+1. 冒頭フック（最初の15秒、視聴者が離脱しない言い方）
+2. 章構成（3〜5つ）
+3. 各章のトークポイント（3つずつ）
+4. 締めのCTA（コメント誘導 or チャンネル登録）
+5. サムネ候補のキャッチコピー3つ</div>
+      <div class="card-tip"><strong>コツ:</strong> 骨子ができれば、あとは「自分の言葉で話す」だけ。台本丸読みより自然で伸びます。</div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORY D -->
+<div class="cat-section" data-cat="D">
+  <div class="cat-header">
+    <div class="cat-letter">D</div>
+    <div class="cat-info"><h2>SNS・集客</h2><p>自分のSNSを伸ばしたい副業者に直撃</p></div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">16</div>
+      <div class="card-title-wrap">
+        <div class="card-title">自分のSNS投稿ネタを30日分出す</div>
+        <div class="card-aim">毎日の「何書こう問題」を終わらせる</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下のアカウント情報をもとに、今後30日分の投稿ネタを出してください。
+
+【発信テーマ】◯◯
+【ターゲット】◯◯
+【発信トーン】◯◯（例: 優しい、専門家ぽい、フランク）
+
+出力形式:
+Day1〜Day30で、以下の情報をセットで:
+- 投稿型（比較/失敗回避/始め方/使い方/共感/ニュース/Tipsのどれか）
+- タイトル or 1行フック
+- 投稿目的（保存/フォロー/コメント/プロフ誘導のどれか）</div>
+      <div class="card-tip"><strong>コツ:</strong> 30日分もらえば、ネタ切れという概念が消えます。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">17</div>
+      <div class="card-title-wrap">
+        <div class="card-title">プロフィール文の改善案5パターン</div>
+        <div class="card-aim">SNSプロフで「スキップされない人」になる</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下の現在のプロフィール文を、5つの方向性で改善してください。
+
+【現プロフィール】◯◯
+【SNS】◯◯（X / Threads / Instagram等）
+【達成したいゴール】◯◯
+
+5つの方向性:
+1. 数字で信頼型
+2. ベネフィット直撃型
+3. キャラ立て型
+4. 役割比喩型（◯◯屋、翻訳係など）
+5. 共感スタート型</div>
+      <div class="card-tip"><strong>コツ:</strong> 5つ出して一番しっくりくるものを採用→1週間試して反応を見る、が最速。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">18</div>
+      <div class="card-title-wrap">
+        <div class="card-title">伸びている投稿のパターン分析</div>
+        <div class="card-aim">運ゲーにせず、再現性を作る</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下は私の過去投稿と数値データです。
+伸びた投稿の共通点と、伸びなかった投稿の共通点を分析してください。
+
+【データ】
+・投稿1: 本文「◯◯」views◯◯ いいね◯◯ 保存◯◯
+・投稿2: 本文「◯◯」views◯◯ いいね◯◯ 保存◯◯
+・投稿3: ...（10件以上あると精度UP）
+
+出力:
+1. 伸びた投稿の共通点（3つ）
+2. 伸びなかった投稿の共通点（3つ）
+3. 次の1週間で試すべき方向性（1つだけ）</div>
+      <div class="card-tip"><strong>コツ:</strong> 10件以上のデータを渡すと、精度が大幅に上がります。週1の振り返り習慣にどうぞ。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">19</div>
+      <div class="card-title-wrap">
+        <div class="card-title">コメント返信のテンプレ作成</div>
+        <div class="card-aim">返信に悩む時間を削る</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>SNSに以下のコメントが来ました。
+信頼が深まる返信を3パターン作ってください。
+
+【投稿の内容】◯◯
+【コメント】◯◯
+
+3パターン:
+1. 短くシンプル版
+2. 質問返し版（関係を深める）
+3. 価値提供版（追加情報を1つ入れる）
+
+トーン: 売り込み感ゼロ、フレンドリー、敬語</div>
+      <div class="card-tip"><strong>コツ:</strong> コメント返信は「信頼の積み上げ」の最大級のチャンス。時間かけずに丁寧に返せる武器です。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">20</div>
+      <div class="card-title-wrap">
+        <div class="card-title">炎上チェック（公開前監査）</div>
+        <div class="card-aim">事故投稿で積み上げを失わない</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下の投稿文を公開する前に、炎上リスクを5観点でチェックしてください。
+
+【投稿文】◯◯
+
+5観点:
+1. 特定個人/企業を傷つけないか
+2. 誇張・嘘に見える表現はないか
+3. マイノリティへの無配慮はないか
+4. 薬機法・景表法・ステマ規制に抵触しないか
+5. 過去の自分の発言と矛盾しないか
+
+各観点で 低/中/高 のリスク評価と、リスクが中以上なら修正案を出してください。</div>
+      <div class="card-tip"><strong>コツ:</strong> 特に数字やレビュー系の投稿は必ず通すと、1回の炎上で失うフォロワーと時間を守れます。</div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORY E -->
+<div class="cat-section" data-cat="E">
+  <div class="cat-header">
+    <div class="cat-letter">E</div>
+    <div class="cat-info"><h2>業務効率化・時短</h2><p>副業で「時間を作る」ための王道5つ</p></div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">21</div>
+      <div class="card-title-wrap">
+        <div class="card-title">長いPDFを1分で要点化</div>
+        <div class="card-aim">資料・マニュアルを読む時間を削る</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>（ChatGPTにPDFをアップロードして）
+
+このPDFの要点を以下の形式でまとめてください。
+
+1. この資料の目的（1行）
+2. 重要な結論（3つまで）
+3. 初心者が見落としがちな注意点（3つ）
+4. この資料に書かれていないが、自分で調べるべきこと（3つ）
+5. 10秒で説明するなら何と言うか（1行）</div>
+      <div class="card-tip"><strong>コツ:</strong> 5の「10秒で説明するなら」は、クライアントへの報告文にも使えます。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">22</div>
+      <div class="card-title-wrap">
+        <div class="card-title">メール文面を「自分の口調」で大量生成</div>
+        <div class="card-aim">同じ内容のメールを何通も書く時間を削る</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下の2通は、私が実際に書いた過去のメールです。
+この口調・温度感を学習したうえで、今回送るメールを作ってください。
+
+【過去メール1】◯◯
+【過去メール2】◯◯
+【今回送りたい内容（要点）】◯◯
+
+条件:
+・過去2通と違和感のない口調で
+・300字前後</div>
+      <div class="card-tip"><strong>コツ:</strong> 過去メールを2〜3通渡すだけで「自分らしさ」が保てます。量産系の案件が格段にラクに。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">23</div>
+      <div class="card-title-wrap">
+        <div class="card-title">Excel関数を日本語で頼む</div>
+        <div class="card-aim">関数を覚えなくて済む</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>Excelで以下をやりたいです。関数を作ってください。
+
+【やりたいこと】
+◯◯（例: A列の日付が今月のものだけ、B列の合計を出したい）
+
+【データの形式】
+◯◯（例: A列=日付、B列=金額、1行目はヘッダー）
+
+出力:
+1. そのままセルに貼れる関数
+2. 関数の意味（初心者にもわかる日本語で）
+3. よくあるエラーと対処法（1〜2個）</div>
+      <div class="card-tip"><strong>コツ:</strong> Googleスプレッドシートでも同じプロンプトで動きます。関数を「覚える」必要が消えます。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">24</div>
+      <div class="card-title-wrap">
+        <div class="card-title">やることを時間配分付きで整理</div>
+        <div class="card-aim">「何から手を付けるか問題」を終わらせる</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>今日やりたいことを、所要時間と優先度付きで整理してください。
+
+【やりたいこと（順不同）】
+・◯◯  ・◯◯  ・◯◯
+
+【使える時間】◯時間
+
+出力:
+1. 優先度順に並べ替え（理由も一言）
+2. 各タスクの推定所要時間
+3. 休憩の入れ方提案
+4. 今日やらなくていい/明日に回していいもの
+5. 疲れたときに最後にやる「軽いタスク」を1つ提案</div>
+      <div class="card-tip"><strong>コツ:</strong> 毎朝5分これをやるだけで、副業と本業の両立がうまく回り出します。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">25</div>
+      <div class="card-title-wrap">
+        <div class="card-title">繰り返しタスクの「定型化テンプレ」を作る</div>
+        <div class="card-aim">同じ作業を「考えなしで終わらせる」状態を作る</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>私は副業で以下の作業を繰り返しています。
+これを「チェックリスト化」して、考えなくても終わる状態にしたいです。
+
+【繰り返している作業】◯◯
+
+【現状の手順（雑でOK）】
+・◯◯  ・◯◯  ・◯◯
+
+出力:
+1. 抜け漏れのないチェックリスト
+2. 各項目の推定時間
+3. 自動化できるところ（AI・ツール活用）
+4. 外注化を検討していい項目（将来的に）</div>
+      <div class="card-tip"><strong>コツ:</strong> 1回これを作れば、一生使える「自分用マニュアル」になります。</div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORY F -->
+<div class="cat-section" data-cat="F">
+  <div class="cat-header">
+    <div class="cat-letter">F</div>
+    <div class="cat-info"><h2>金銭・学習・判断</h2><p>副業の「続ける/やめる」の判断を助ける5つ</p></div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">26</div>
+      <div class="card-title-wrap">
+        <div class="card-title">案件を時給換算して続けるか判断</div>
+        <div class="card-aim">安売り副業から抜ける</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下の副業案件を時給換算して、続けるべきかどうかの判断材料を出してください。
+
+【案件情報】
+・案件名: ◯◯
+・報酬: ◯◯円
+・拘束時間: ◯時間
+・スキル習得度（自分の成長になるか）: ◯
+・将来の単価UP可能性: ◯
+
+出力:
+1. 単純な時給換算
+2. 自分の成長度を加味した評価
+3. 「この案件でしか得られないもの」があるか
+4. 続けるべき/やめるべき/条件付きで続けるの3択判定
+5. やめる場合の綺麗な辞め方</div>
+      <div class="card-tip"><strong>コツ:</strong> スキル初期は単価より経験。慣れてきたら単価最優先。AIに分けて判断してもらえます。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">27</div>
+      <div class="card-title-wrap">
+        <div class="card-title">確定申告に必要な経費を分類</div>
+        <div class="card-aim">税金の不安を減らす</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>私は副業を始めて◯ヶ月目です。以下の支出が経費になるか判定してください。
+
+【支出リスト】
+・◯◯ ◯円  ・◯◯ ◯円  ・◯◯ ◯円
+
+出力:
+1. 経費になる/ならない/グレーの3分類
+2. 経費にするための条件（グレーの場合）
+3. 按分が必要な項目の目安割合
+4. 領収書の保管期間と方法
+
+※最終判断は税理士・税務署に確認してください。</div>
+      <div class="card-tip"><strong>コツ:</strong> AIは「一次スクリーニング」に使って、金額が大きいものは税理士に確認が安全です。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">28</div>
+      <div class="card-title-wrap">
+        <div class="card-title">新ジャンルの参入難易度を評価</div>
+        <div class="card-aim">ジャンル選びで失敗しない</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>新しく参入を考えている副業ジャンルを評価してください。
+
+【候補ジャンル】◯◯
+【私のスキル・使える時間】
+・スキル: ◯◯
+・1日に使える時間: ◯時間
+・使える初期費用: ◯円
+
+出力:
+1. 参入難易度（5段階）
+2. 収益化までの平均期間
+3. レッドオーシャン度（5段階）
+4. 私のスキルとの相性
+5. 代わりに検討すべき隣接ジャンル（3つ）</div>
+      <div class="card-tip"><strong>コツ:</strong> 5で出る「隣接ジャンル」が意外と穴場。ブルーオーシャンを見つける手段になります。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">29</div>
+      <div class="card-title-wrap">
+        <div class="card-title">学びたいスキルのロードマップ作成</div>
+        <div class="card-aim">独学の迷子をなくす</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>以下のスキルを独学で身につけたいです。
+3ヶ月で「副業で使えるレベル」に到達するロードマップを作ってください。
+
+【学びたいスキル】◯◯
+【現在のレベル】◯◯（例: 完全初心者 / 基礎はわかる）
+【1日に使える時間】◯時間
+
+出力:
+1. 週ごとのマイルストーン（Week1〜Week12）
+2. 各週の学習内容と推奨教材（無料優先）
+3. 躓きやすいポイントと突破法
+4. 学んだ内容を「副業の実践」にする転換タイミング
+5. Week12時点で「できるようになっていること」の明確な定義</div>
+      <div class="card-tip"><strong>コツ:</strong> 「無料優先」を入れるのがコツ。有料教材を最初から買うと続かない率が上がります。</div>
+    </div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-num">30</div>
+      <div class="card-title-wrap">
+        <div class="card-title">判断に迷ったとき「あえて反論してもらう」</div>
+        <div class="card-aim">重要な決断で「見落とし」を発見する</div>
+      </div>
+      <div class="card-toggle">+</div>
+    </div>
+    <div class="card-body">
+      <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>私は今、以下の決断に迷っています。
+あなたは優秀な反対派の役を演じてください。
+
+【迷っている決断】◯◯
+【私の判断に傾いている方向】◯◯
+【その理由】
+・◯◯  ・◯◯
+
+あなたの役割:
+1. 私の判断に対する「強い反論」を3つ
+2. 見落としている可能性があるリスク3つ
+3. 逆の選択をした場合のメリット3つ
+4. 最後に「どちらを選んでもいい」と思える慰めの一言</div>
+      <div class="card-tip"><strong>コツ:</strong> AIに賛成ではなく反論させると、自分1人では気づけない視点が出てきます。副業の最大の武器。</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-logo">コア｜AI知識×時短</div>
+  <div class="footer-handle">@lab_ai_core on Threads</div>
+  <p class="footer-note">
+    毎週、AIをもっと使いこなすTipsをLINEで配信しています。<br>
+    リクエストがあればLINEで返信してください。<br>
+    次回の配布コンテンツの参考にします。
+  </p>
+</div>
+
+</div>
+
+<script>
+function toggle(head) {
+  const card = head.closest('.prompt-card');
+  card.classList.toggle('open');
+}
+
+function filterCat(cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.cat-section').forEach(s => {
+    s.style.display = (cat === 'all' || s.dataset.cat === cat) ? '' : 'none';
+  });
+}
+
+function copyPrompt(btn) {
+  const box = btn.closest('.prompt-box');
+  const text = box.innerText.replace('コピー', '').replace('コピー済み', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'コピー済み';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
