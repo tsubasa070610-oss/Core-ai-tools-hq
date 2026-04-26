@@ -1,0 +1,919 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>マーケ・SNS担当のためのChatGPTプロンプト10選</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="34e319c4-16c3-804d-b010-ec8d7be1ecb7" class="page sans"><header><h1 class="page-title" dir="auto">マーケ・SNS担当のためのChatGPTプロンプト10選</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="34e319c4-16c3-801f-a42f-dd04206d2e9f" class="">そのままコピペで使える、業務特化テンプレ集です。</p></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-8066-b414-e8ebda97a714" class="">はじめに</h2></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-80cf-b87b-fa8f3be7b389" class="">マーケティングやSNS運用の現場では、「考える前の整理」「最初のたたき」「ちょっとした言い換え」に時間が取られがちです。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-8092-ac86-f2df28122c0c" class="">このテンプレ集は、そういう「最初の一手間」をChatGPTに任せて、人間は判断と仕上げに集中できるようにするためのものです。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-8072-a1ae-dfec404e1871" class="">使い方はシンプルで、該当するテンプレをそのままChatGPTに貼り付けて、{ }で囲まれた変数だけを自分の状況に置き換えるだけです。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-802f-8fa4-d6de068947a5" class="">10種類すべて、初心者の方でも今日から使える内容にしています。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-80ad-8d6b-e1cb8325a75d" class="">ChatGPTを主軸に書いていますが、ClaudeやGeminiでも同じように動くものが多いです。</p></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-80af-8a9e-c786d038ee6f"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-8072-b9b5-e27d9cff9d26" class="">1. SNS投稿の原案たたき</h2></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-803b-8a74-ccf4fada58f4" class="">用途</h3></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-80fa-aa59-d7a22120f747" class="">SNS投稿の最初のたたきを作る。ゼロから書き出すのが重い時に、構成と切り口の候補を一気に出してもらう。</p></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80f1-82c0-d15e7606be54" class="">そのまま貼れるプロンプト</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js" integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="34e319c4-16c3-80a2-ba18-de241f3e3781" class="code code-wrap"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">あなたはSNS運用の経験が長いライターです。
+以下の条件で、{プラットフォーム}向けの投稿原案を3案出してください。
+
+- テーマ: {投稿テーマ}
+- 想定読者: {読者像}
+- 投稿の目的: {目的（例: 保存される / コメントが来る / 共感される）}
+- 文字数の目安: {文字数}
+- 避けたい表現: 煽り、誇張、断定
+
+各案について、以下を必ず含めてください。
+1. 冒頭1〜2行（フック）
+2. 本文（指定文字数内）
+3. この案の狙い（なぜこの切り口なのか）
+4. 注意点（この案の弱点・誤解されそうな部分）</code></pre></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80c0-8d5f-f2d0c70eb5f0" class="">入れ替える変数</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8031-b063-e36edf50a97f" class="bulleted-list"><li style="list-style-type:disc"><code>{プラットフォーム}</code>: Threads / X / Instagram / LinkedIn など</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80d7-8805-d434fa0c3c4a" class="bulleted-list"><li style="list-style-type:disc"><code>{投稿テーマ}</code>: 具体的なテーマを1〜2文で</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-806a-ac6e-c886aa724980" class="bulleted-list"><li style="list-style-type:disc"><code>{読者像}</code>: 年代・職種・関心</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-806b-a6f1-d97d5c887567" class="bulleted-list"><li style="list-style-type:disc"><code>{目的}</code>: 1つに絞る</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8097-bf37-fa3a4d3d3e19" class="bulleted-list"><li style="list-style-type:disc"><code>{文字数}</code>: 例「250〜350字」</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8045-b968-ec02afb3a9b2" class="">使うときの注意</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-804e-9690-f1cc23997adb" class="bulleted-list"><li style="list-style-type:disc">そのまま投稿せず、たたき台として扱う。違和感のある言い回しは必ず手直しする</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8026-891f-e6c27fc0a8df" class="bulleted-list"><li style="list-style-type:disc">同じテーマで何度か出すと、似た構成に偏ることがある。切り口を変えたい時は「全く別の角度で」と追加で指示する</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80a1-a9a9-f34dd63d78bb" class="">出力を良くする追加指示</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8083-bf8c-cca57cf05df3" class="bulleted-list"><li style="list-style-type:disc">「投稿の冒頭で『〜ですよね』のような共感型は使わないでください」など、避けたい型を具体的に書く</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8049-9be6-f287cd1ae3e7" class="bulleted-list"><li style="list-style-type:disc">過去に伸びた自社投稿を1〜2本貼って「このトーンに寄せて」と渡すと、トーンのブレが減る</li></ul></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-80ba-91a8-e3d7cae9c1b9"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-801b-a051-d569e18ec3b8" class="">2. 見出し量産</h2></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8038-b557-dfbe4ebeb576" class="">用途</h3></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-802a-b8e2-c29438d854c5" class="">ブログ・noteの見出し、LP内の小見出し、メルマガのテーマ案など、見出し系を一気に量産する。</p></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8022-a32f-eda0230809ca" class="">そのまま貼れるプロンプト</h3></div><div style="display:contents" dir="auto"><pre id="34e319c4-16c3-8028-bd3a-e5ba4cb1b0bc" class="code code-wrap"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">以下の本文または企画概要を読んで、見出し候補を10個出してください。
+
+- 用途: {用途（ブログタイトル / 章見出し / LP見出し など）}
+- 本文または概要:
+{本文 or 企画概要}
+
+条件:
+- 文字数は{目安文字数}以内
+- 数字や固有名詞を入れたバージョンも混ぜる
+- 読者が「自分のことだ」と感じる切り口を1つは入れる
+- 煽り・誇張は避ける（「絶対」「完全」「最強」などはNG）
+- 10個の中で重複しないように、切り口を分散させる
+
+各見出しの下に、なぜその切り口にしたかを1行で添えてください。</code></pre></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80b6-a779-e887de26d019" class="">入れ替える変数</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8055-9785-d0b38ce2c105" class="bulleted-list"><li style="list-style-type:disc"><code>{用途}</code>: 何の見出しなのか</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8035-ace3-daf9b16f8e1e" class="bulleted-list"><li style="list-style-type:disc"><code>{本文 or 企画概要}</code>: 元になる素材</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80ea-81db-f679517481c4" class="bulleted-list"><li style="list-style-type:disc"><code>{目安文字数}</code>: 例「30字」「20字」</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80f1-9c48-efe15e61c27d" class="">使うときの注意</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80b7-9011-d13ffeb57053" class="bulleted-list"><li style="list-style-type:disc">出てきた見出しをそのまま使うと、表現が均質になる傾向がある。最終的に2〜3案に絞り、人間が言葉選びを微調整する</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-807d-afd7-c2a525a50acc" class="bulleted-list"><li style="list-style-type:disc">AIは「数字を入れすぎる」「断定しすぎる」傾向があるので、最終チェックで弱める</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8091-8f61-c0db0bb65059" class="">出力を良くする追加指示</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-805c-9c64-e5c4cb0718a0" class="bulleted-list"><li style="list-style-type:disc">「自社のブランドトーンに合わせて、丁寧語・敬体で書いてください」と一文足すと、トーンが整う</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-805b-960a-ca3ab685d42e" class="bulleted-list"><li style="list-style-type:disc">「読者の悩み起点」「ベネフィット起点」「数字起点」「対比起点」のように切り口の枠を指定すると、バリエーションが揃う</li></ul></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-8073-9c08-c6664b69aed2"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-806e-bce6-ec1e29f1869f" class="">3. ペルソナ抽出</h2></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-808d-9956-d83ac67c4a29" class="">用途</h3></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-8080-81a3-eb7f3946350a" class="">お客様の声・問い合わせ・アンケート回答などのまとまった情報から、ペルソナの輪郭を引き出す。</p></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8045-84f5-db211d1c2ff7" class="">そのまま貼れるプロンプト</h3></div><div style="display:contents" dir="auto"><pre id="34e319c4-16c3-80ab-8a57-e36f2592d65e" class="code code-wrap"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">以下の素材から、サービスの想定顧客像（ペルソナ）を抽出してください。
+
+素材:
+{お客様の声 / アンケート結果 / 問い合わせログ などをそのまま貼る}
+
+出力形式:
+1. 共通点が多い読者像 上位3パターン
+2. 各パターンについて以下を埋める
+   - 年代・職業・立場の推定
+   - 抱えていそうな課題（素材から読み取れるもの）
+   - 解決したいゴール
+   - 使っている言葉のクセ（素材から拾える表現）
+   - 響きそうな訴求の方向性
+3. 注意点として、素材から読み取れない部分（推測になっている部分）は明示してください</code></pre></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-807b-945f-e8cf13c3f83a" class="">入れ替える変数</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80d6-897c-d4780e4c3841" class="bulleted-list"><li style="list-style-type:disc"><code>{素材}</code>: 実際の声・回答・ログ。匿名化してから貼ること</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8071-a11f-cf27978c4e0b" class="">使うときの注意</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8062-99f1-c79a23488800" class="bulleted-list"><li style="list-style-type:disc">個人情報・社内秘情報は必ず匿名化してから貼る</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-807b-8045-e16840e1f1ff" class="bulleted-list"><li style="list-style-type:disc">AIは「ありそうなペルソナ」を作る傾向があるので、素材から読み取れない部分は推測だと明示させる</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8027-a8e9-e7161dd3325e" class="bulleted-list"><li style="list-style-type:disc">出てきたペルソナはそのまま採用せず、社内メンバーで「実在のお客様像と合うか」を必ず照合する</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80c3-b20c-ef5aaa4fc94b" class="">出力を良くする追加指示</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-807d-b85d-d0dda508bf0b" class="bulleted-list"><li style="list-style-type:disc">「年代や職業を具体的に断定せず、『〜の傾向がある』と幅を残してください」と指示すると、現実離れしにくい</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8022-b88d-d787c8edb447" class="bulleted-list"><li style="list-style-type:disc">素材が少ない時は、「データが薄いので、断定せず仮説として書いてください」と最初に伝える</li></ul></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-801e-a689-f74efe835dcb"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-80c2-b057-dba836d84329" class="">4. 競合分析の最初の整理</h2></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80a6-af7e-c532bbf94222" class="">用途</h3></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-80f7-a411-da4c5d27435f" class="">競合のサイト・SNS・サービス紹介ページなどを並べた時の、最初の整理。意思決定のたたき台に使う。</p></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-802c-b48b-ecfa1aa002d6" class="">そのまま貼れるプロンプト</h3></div><div style="display:contents" dir="auto"><pre id="34e319c4-16c3-80c1-bd20-e78fefa5e36d" class="code code-wrap"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">以下の競合情報を整理してください。
+
+自社の概要:
+{自社サービスの一言説明}
+
+競合情報:
+- 競合A: {サイト要約 or 訴求文}
+- 競合B: {サイト要約 or 訴求文}
+- 競合C: {サイト要約 or 訴求文}
+
+出力してほしいこと:
+1. 各競合の主訴求（一言）
+2. 各競合の強そうな点・弱そうな点
+3. 自社と被っている訴求 / 自社と差別化できそうな空白
+4. 「ここを攻めると埋もれる」リスクのあるポジション
+5. 推測している部分は最後にまとめて明示
+
+トーン: 断定しすぎず、「〜の可能性がある」「〜と読み取れる」のように整理してください。</code></pre></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80da-b0b6-e4d92bb3faa1" class="">入れ替える変数</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-802e-9dbc-d152ecabde1b" class="bulleted-list"><li style="list-style-type:disc"><code>{自社サービスの一言説明}</code>: 短く</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80dd-b31a-f05cfcc65ffc" class="bulleted-list"><li style="list-style-type:disc"><code>{競合A〜Cのサイト要約}</code>: 各社の公開情報を貼る。要約済みでもOK</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80cc-ac6c-fe568f35d3be" class="">使うときの注意</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8081-aa56-c35f09d9267b" class="bulleted-list"><li style="list-style-type:disc">これはあくまで「最初の整理」。最終的な競合分析は人間の現場感で判断する</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80d5-9770-f6ccf5ab3fca" class="bulleted-list"><li style="list-style-type:disc">AIは公開情報から書ける範囲しか見ていない。価格戦略・営業現場の動きなどは出ないので過信しない</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-803b-b9af-c16c678403c6" class="bulleted-list"><li style="list-style-type:disc">競合の悪口や格下げ表現が混ざることがあるので、出力後に必ず確認する</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-809d-a7f8-ec48174d271c" class="">出力を良くする追加指示</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80c3-86d1-d71728e5da60" class="bulleted-list"><li style="list-style-type:disc">「競合の評価で否定的な強い表現（時代遅れ、ダメ、など）は使わないでください」と最初に伝える</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-801f-a234-ee7e185e25b2" class="bulleted-list"><li style="list-style-type:disc">「自社の強みは何かを提示するのではなく、空白ポジションの候補を出してください」と限定すると、情報商材的な答えになりにくい</li></ul></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-8033-aa47-e3813d42a4c6"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-8054-9759-f2f1cf0a32a6" class="">5. 反応が薄かった理由の仮説出し</h2></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8070-8d8c-eddf05d30bdd" class="">用途</h3></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-8047-a48f-c83defea4282" class="">投稿・メルマガ・LPなど、思ったより反応が薄かった施策について、原因仮説を複数出す。</p></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8046-8243-df6ede4cfa8d" class="">そのまま貼れるプロンプト</h3></div><div style="display:contents" dir="auto"><pre id="34e319c4-16c3-80f9-8c4d-ff076dca4bde" class="code code-wrap"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">以下の施策が、想定より反応が薄かった理由の仮説を5つ出してください。
+
+施策の内容:
+{投稿本文 or メルマガ本文 or LPの抜粋}
+
+数値:
+- 想定: {想定していた反応の例}
+- 実際: {実際の反応の例}
+
+文脈:
+- 配信先: {配信先 / 投稿先}
+- 配信時期や状況で気になる点: {あれば記入}
+
+出力形式:
+仮説1〜5について、以下を埋める
+- 仮説の内容
+- そう考える根拠（本文・数値・文脈のどこから読み取れるか）
+- この仮説を確かめるには次に何を検証すればよいか
+- 仮説の確度（高 / 中 / 低）とその理由
+
+注意:
+- 「読者の理解度が低かった」のような相手のせいにする仮説は、根拠がある時だけ含める
+- 5つの仮説は、できるだけ別の角度から出してください（コピー、構成、タイミング、媒体、訴求対象 など）</code></pre></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80ce-b945-d9bdd1971bd3" class="">入れ替える変数</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80a6-9f1f-d0289802db35" class="bulleted-list"><li style="list-style-type:disc"><code>{施策の内容}</code>: 該当する施策本文</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80a6-89bd-fbaf2044641e" class="bulleted-list"><li style="list-style-type:disc"><code>{想定 / 実際}</code>: 簡単な数値や反応で良い</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80dd-afb2-d84d5bc77d59" class="bulleted-list"><li style="list-style-type:disc"><code>{配信先 / 投稿先}</code>: プラットフォームや読者層</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80cc-9c8d-de8110eccd35" class="">使うときの注意</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8060-9e1d-c95163ae26a3" class="bulleted-list"><li style="list-style-type:disc">「読者が悪い」系の仮説を強く出す傾向があるので、根拠があるものに限定するよう指示する</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8009-80e2-e663d6e7229e" class="bulleted-list"><li style="list-style-type:disc">確度の自己評価が甘くなりがち。出てきたものは社内で再評価する</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80b9-99de-e816a2ca3721" class="bulleted-list"><li style="list-style-type:disc">1施策の反応だけで結論を出さない。仮説止まりにする</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80fb-8c25-d59cfcfc08d7" class="">出力を良くする追加指示</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8051-bb8c-dee13008f218" class="bulleted-list"><li style="list-style-type:disc">「施策側で改善できるポイントに絞って5つ出してください」と限定すると、行動につながる仮説になる</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-807a-bd98-cb087c8aae70" class="bulleted-list"><li style="list-style-type:disc">過去の似た施策のデータがあれば貼ると、仮説の精度が上がる</li></ul></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-80d9-bbd8-dc5382883983"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-80d8-bf83-e0dac3c315b8" class="">6. メール件名AB案</h2></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80f4-9909-c9f201757131" class="">用途</h3></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-8010-b395-dc80179b6d6b" class="">配信メール・営業メール・問い合わせメールなどの件名を、AB案として複数比較する。</p></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80bc-a687-f9d1a52a9478" class="">そのまま貼れるプロンプト</h3></div><div style="display:contents" dir="auto"><pre id="34e319c4-16c3-80d1-b342-ea2bf1662f76" class="code code-wrap"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">以下のメールの件名候補を、A群とB群に分けて出してください。
+
+メール本文の概要:
+{本文 or 概要}
+
+配信先:
+{配信先の属性}
+
+メールの目的:
+{目的（開封してもらう / 返信してもらう / 行動してもらう など）}
+
+A群の方針: ベネフィット先出し型（読者の利益を冒頭で示す）
+B群の方針: 課題提起型（読者の困りごとを先に置く）
+
+各群について
+- 件名候補を5つずつ
+- 各件名の文字数（全角換算）
+- 各件名の狙い（1行）
+- 注意点（誤解されそう / 強すぎる / 弱すぎる など）
+
+避けたい表現:
+- 「絶対」「必ず」「最後の」「特別」「限定」などの煽り
+- 開いたら本文と内容が違うクリックベイト</code></pre></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80bb-8229-fea4791535b2" class="">入れ替える変数</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-801c-87c4-e8f22d7b5025" class="bulleted-list"><li style="list-style-type:disc"><code>{本文 or 概要}</code>: メール内容</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80d9-bd02-c3b96ee717c1" class="bulleted-list"><li style="list-style-type:disc"><code>{配信先の属性}</code>: 既存顧客 / 見込み客 / 問い合わせ後 など</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80ba-9082-fe1f0a06fdaa" class="bulleted-list"><li style="list-style-type:disc"><code>{目的}</code>: 1つに絞る</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8016-a319-e23aa26ee2bf" class="">使うときの注意</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8054-983c-c82dfeb3b941" class="bulleted-list"><li style="list-style-type:disc">件名は最終的にメーラーやスマホ画面で見え方が変わる。文字数だけでなく実機で確認する</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80a6-ae8c-cb01664cf6a4" class="bulleted-list"><li style="list-style-type:disc">「【】」「!」などの記号は、配信先の業界・関係性によって受け取られ方が違う。まずは記号控えめでテストする</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-806c-a514-ea5339bdeeda" class="bulleted-list"><li style="list-style-type:disc">AB案は同時配信できる環境がない場合、週ずらしで検証する</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80d2-b486-d3b5ef9db5b0" class="">出力を良くする追加指示</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8036-931d-c5814116e8c9" class="bulleted-list"><li style="list-style-type:disc">「文字数は28字以内でお願いします（モバイル表示で切れない範囲）」と具体的に指定する</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80b9-aafa-cb5e27f93c55" class="bulleted-list"><li style="list-style-type:disc">配信ツールの仕様（プリヘッダーが見えるか）も伝えると、件名とプリヘッダーをセットで提案してくれる</li></ul></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-8091-8d14-f4aec48f2e32"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-80f1-91e7-cf11137af990" class="">7. CTAリライト</h2></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80a5-8430-c0e9ba9d4992" class="">用途</h3></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-80cb-9acf-fee328937a70" class="">LP・投稿・メルマガ・LINEなどの行動喚起文（CTA）を、強さ違い・トーン違いで複数案にする。</p></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-805f-aa32-e385fef14c5a" class="">そのまま貼れるプロンプト</h3></div><div style="display:contents" dir="auto"><pre id="34e319c4-16c3-806b-96b0-f7f5898d7c56" class="code code-wrap"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">以下のCTA文を、3パターンにリライトしてください。
+
+元のCTA:
+{現状のCTA}
+
+文脈:
+- 置かれている場所: {例: LPの最後 / 投稿末尾 / メールの結び}
+- 読者の状態: {例: まだサービスを知ったばかり / 何度か接点あり / 既存顧客}
+- 行動の重さ: {例: 無料登録 / 資料請求 / 問い合わせ / 購入}
+
+3パターンの方針:
+- パターン1: 行動の重さを軽く感じさせるトーン
+- パターン2: 行動の理由（ベネフィット）を明確にするトーン
+- パターン3: 押し売り感ゼロで「保留してもよい」雰囲気のトーン
+
+各パターンに以下を添えてください。
+- リライト案
+- 元のCTAとの違いの一言要約
+- このパターンが向く読者の状態
+
+避けたい表現: 「今すぐ」「絶対」「限定」「逃すと損」のような煽り。</code></pre></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8063-b898-f83ff52e0f85" class="">入れ替える変数</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80a6-acd5-efd1739f2eff" class="bulleted-list"><li style="list-style-type:disc"><code>{現状のCTA}</code>: 今使っているCTA文をそのまま貼る</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80ad-a9d8-e9e0ff191283" class="bulleted-list"><li style="list-style-type:disc"><code>{文脈}</code>: 場所・読者・行動の重さ</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8097-a89b-e063005d81c7" class="">使うときの注意</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8086-8739-eccf94196fcb" class="bulleted-list"><li style="list-style-type:disc">CTA1つだけ強くしても、本文が弱いと反応は変わらない。本文との温度差をチェックする</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80ce-a439-e170061e0223" class="bulleted-list"><li style="list-style-type:disc">リライト案は「自社らしさ」が薄まりがち。最後はブランドのトーンに揃える</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8053-8219-d5039b8d1290" class="bulleted-list"><li style="list-style-type:disc">同じLPで毎月リライトしすぎると、検証データが取れなくなる。検証期間を決めてから差し替える</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8013-9e0c-ff2d2040f223" class="">出力を良くする追加指示</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8080-af78-ee20913fc328" class="bulleted-list"><li style="list-style-type:disc">「読者が断りづらく感じる表現は避けてください」と入れると、心理的圧の強い案が出にくくなる</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8056-bade-e3b305e94cfe" class="bulleted-list"><li style="list-style-type:disc">既存の自社CTAで一番反応が良かったものを1つ貼って「このトーンを基準にして」と伝えると、ブレが減る</li></ul></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-8035-a497-f374e35efc96"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-80d0-aa95-fd179f3fd886" class="">8. コンテンツカレンダー骨子</h2></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-806e-a339-fe12d8e42f1b" class="">用途</h3></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-8050-b9a4-cb9e53c07eff" class="">1ヶ月〜3ヶ月のコンテンツ計画の、最初の骨組みを作る。テーマの偏りチェックにも使える。</p></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-804b-afaa-f13d130c77a2" class="">そのまま貼れるプロンプト</h3></div><div style="display:contents" dir="auto"><pre id="34e319c4-16c3-803b-a8bf-c9e4c800c16b" class="code code-wrap"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">以下の条件で、{期間}分のコンテンツカレンダー骨子を作ってください。
+
+- 媒体: {媒体（ブログ / SNS / メルマガ など。複数可）}
+- 主な発信目的: {目的（信頼形成 / 認知拡大 / リード獲得 など）}
+- 想定読者: {読者像}
+- 既に出してきたテーマ: {直近で出したテーマを箇条書きで}
+- 避けたいテーマ: {あれば}
+- 投稿頻度: {頻度（例: 週3本 × 4週間）}
+
+出力形式:
+週ごとに以下を埋める
+- 各回のテーマ案
+- そのテーマで扱う切り口
+- 媒体（該当する場合）
+- 過去テーマと被りそうな点（あれば指摘）
+- このテーマで読者に何を持ち帰ってほしいか
+
+最後に、全体を通したテーマの偏り（似た領域に集中していないか）を一言コメントしてください。</code></pre></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8090-a1c4-f17228484bc7" class="">入れ替える変数</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80ac-8d18-fb613ff3f12e" class="bulleted-list"><li style="list-style-type:disc"><code>{期間}</code>: 1ヶ月 / 4週間 / 12週間 など</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-808a-af07-db59c2e3d53e" class="bulleted-list"><li style="list-style-type:disc"><code>{媒体}</code>: 単一でも複数でも</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8067-a066-dafa7f109c1d" class="bulleted-list"><li style="list-style-type:disc"><code>{頻度}</code>: 現実的な本数で</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80fb-9a15-e584b2ee7146" class="">使うときの注意</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8084-a096-de7fd4239585" class="bulleted-list"><li style="list-style-type:disc">AIは「キレイに並んだ計画」を出す傾向がある。実務ではイレギュラーが入るので、3割は空き枠として残す</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-804f-aa7e-e66562a9d151" class="bulleted-list"><li style="list-style-type:disc">出てきたテーマをそのまま採用すると、全体的にどこかで見たような構成になりやすい。1〜2本は社内独自のテーマに差し替える</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8094-8ff1-f79b126a3fdb" class="bulleted-list"><li style="list-style-type:disc">過去テーマを貼り忘れると、似たテーマが繰り返される</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-805a-a916-ceb747f9b334" class="">出力を良くする追加指示</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8036-9220-efc24bb00a48" class="bulleted-list"><li style="list-style-type:disc">「同じツール名・同じサービス名は週内に2回以上登場させないでください」と縛ると、被りが減る</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-809e-b2ed-f6abda9bfbc3" class="bulleted-list"><li style="list-style-type:disc">「初心者向け / 中級者向け / 上級者向け」の比率を指定すると、レベル感のバランスが整う</li></ul></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-808f-8972-f01015eb9bd9"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-80b0-aa7e-eb7dbbdcf2a2" class="">9. 簡易SEO骨子</h2></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80ee-afb6-f510b29f934e" class="">用途</h3></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-80db-a0f8-c4f720c3d809" class="">記事作成前の、SEO観点での最初の骨組み。本格的なキーワード調査の前段階に使う。</p></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8038-94d3-d88e3857e56e" class="">そのまま貼れるプロンプト</h3></div><div style="display:contents" dir="auto"><pre id="34e319c4-16c3-8044-9bef-ee5da3e9a03d" class="code code-wrap"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">以下のテーマで、SEO記事の骨子を1本分作ってください。
+
+- メインキーワード: {メインKW}
+- 関連キーワード（あれば）: {関連KW}
+- 想定読者: {読者像}
+- 検索意図の仮説: {読者が何を知りたくて検索しているかの仮説}
+- 想定文字数: {文字数}
+
+出力形式:
+1. タイトル候補3つ（各32字以内）
+2. リード文（200字程度）
+3. 見出し構成（H2、H3まで。10〜15個程度）
+4. 各見出しで触れるべきポイントを1〜2行
+5. 検索意図とズレそうな見出しがあれば指摘
+6. 内部リンクで紐づけたい関連テーマの候補
+7. 注意点として、推測で書いている部分とデータで裏付けた方がよい部分を分けてください
+
+避けたい表現: 「絶対」「必ず」「最強」「完全網羅」のような煽り。</code></pre></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-807c-aeca-fc90ae2daf5c" class="">入れ替える変数</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-801c-9a25-f71c69d48ecc" class="bulleted-list"><li style="list-style-type:disc"><code>{メインKW / 関連KW}</code>: 検索キーワード</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80a6-bfea-f0a12291b1c9" class="bulleted-list"><li style="list-style-type:disc"><code>{読者像}</code>: 想定読者</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80d8-958e-feba6af869a0" class="bulleted-list"><li style="list-style-type:disc"><code>{検索意図の仮説}</code>: 「○○を初めて使う人が、まず何を知りたいか」のような形</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8052-8587-fd417e857e34" class="bulleted-list"><li style="list-style-type:disc"><code>{文字数}</code>: 2,000〜3,000字 など</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-809f-a171-dff7f70afbde" class="">使うときの注意</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8055-9a41-dd24da75f124" class="bulleted-list"><li style="list-style-type:disc">これは「骨子のたたき」。本格的にやるなら、検索ボリューム・競合上位記事・サジェスト調査などを別途行う</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80ac-86b2-c0130de88448" class="bulleted-list"><li style="list-style-type:disc">AIは「網羅型の見出し」を作りがち。全部書こうとすると冗長になるので、最終的に削る</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-800d-b172-f08903de1dfd" class="bulleted-list"><li style="list-style-type:disc">検索意図の仮説が間違っていると、骨子全体がズレる。仮説は社内で1度確認する</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80fe-8429-ee9dd75ed8f8" class="">出力を良くする追加指示</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8059-b354-c76b1185ec73" class="bulleted-list"><li style="list-style-type:disc">「検索上位の構成を真似るのではなく、検索意図に答える独自の流れにしてください」と入れると、テンプレ化を防げる</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-807c-a16d-edeb56657314" class="bulleted-list"><li style="list-style-type:disc">「初心者がつまずきやすい部分を、見出しレベルで明示してください」と加えると、読者目線の骨子になる</li></ul></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-8039-97ea-e86996e37554"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-80d7-b339-fa804e74c5d8" class="">10. 読者ペルソナ言い換え</h2></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80d2-aac5-de62cf077a2d" class="">用途</h3></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-80ad-8418-de77ca649e5c" class="">できあがった原稿を、別の読者層に向けて言い換える。同じ内容を媒体ごとに出し分ける時にも使える。</p></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8093-a6a2-d8346cfa0064" class="">そのまま貼れるプロンプト</h3></div><div style="display:contents" dir="auto"><pre id="34e319c4-16c3-807c-8750-f0a811724c21" class="code code-wrap"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">以下の原稿を、読者層を変えて書き直してください。
+
+元の原稿:
+{原稿本文}
+
+元の想定読者:
+{元の読者像}
+
+新しい想定読者:
+{新しい読者像}
+
+書き直す時の条件:
+- 内容の本質（伝えたい結論・根拠）は変えない
+- 専門用語の使い方を新しい読者層に合わせる
+- 例え・たとえ話を新しい読者の日常に近いものに差し替える
+- 文体のトーン（敬体・常体）は新しい読者に合わせて選ぶ
+- 元の原稿で「効きそうだった部分」をなるべく残す
+- 文字数は元の原稿の±20%以内に収める
+
+出力形式:
+1. 書き直した原稿
+2. 主な変更点を3〜5個（どこをどう変えたか）
+3. この読者層には合わない可能性のある残し部分（あれば）</code></pre></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-80ba-bf1a-f495c8ce562a" class="">入れ替える変数</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-800b-85b5-c1733d89f64d" class="bulleted-list"><li style="list-style-type:disc"><code>{原稿本文}</code>: 既存の原稿</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8094-8f15-c577a9a9968b" class="bulleted-list"><li style="list-style-type:disc"><code>{元の読者像 / 新しい読者像}</code>: 具体的に</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8075-afb4-dea76ab5b477" class="">使うときの注意</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8094-bb67-cf439972c490" class="bulleted-list"><li style="list-style-type:disc">言い換えのつもりが「中身が薄まる」ことがある。元の論点が残っているか必ず確認する</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8099-bbca-e38581ca7958" class="bulleted-list"><li style="list-style-type:disc">AIは新しい読者向けに「やさしくしすぎる」傾向がある。読者がプロ寄りなら、過度な平易化は逆効果になる</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-806a-97d9-c58d21100065" class="bulleted-list"><li style="list-style-type:disc">ブランドのトーンが媒体ごとに違うなら、トーンガイドも一緒に渡す</li></ul></div><div style="display:contents" dir="auto"><h3 id="34e319c4-16c3-8030-a59a-ef06f933b871" class="">出力を良くする追加指示</h3></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-8031-bf33-f9e1429f5a02" class="bulleted-list"><li style="list-style-type:disc">「専門用語は完全に置き換えるのではなく、必要な用語は残し、補足を一文で添える形にしてください」と指示すると、内容の厚みが残る</li></ul></div><div style="display:contents" dir="auto"><ul id="34e319c4-16c3-80c6-b0de-c7f0c3732dac" class="bulleted-list"><li style="list-style-type:disc">元の原稿で削られたくない一文があれば「この一文は必ず残してください: 〜」と明示する</li></ul></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-80ec-b163-fa00f049f2fa"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-8057-9abf-d4e36445c437" class="">使い方の注意（全テンプレ共通）</h2></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-8061-b840-d664f3359bca" class="">ここまで紹介した10個のテンプレは、どれも「最初のたたき」「考える前の整理」を任せるためのものです。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-8023-ae98-ed686e6e9f9e" class="">そのまま完成原稿として使うのではなく、人間が判断と仕上げを担当することを前提にしています。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-800b-94ce-e70c805a969d" class="">具体的には、次の3つを意識すると失敗しにくくなります。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-80de-87e0-e43e6d4c0a51" class="">1つ目は、個人情報・機密情報は必ず匿名化してから貼ることです。お客様の声や社内データを使う時、特に気をつけてください。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-8009-bba2-eda6966e37d1" class="">2つ目は、AIの出力は「ありそうな答え」になりやすいということです。煽り表現・断定・誇張が混ざりやすいので、最終チェックで弱める癖をつけると安全です。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-809b-ac40-f5d86c2c8e82" class="">3つ目は、同じテンプレを使い続けると出力が均質化することです。月に1回はテンプレ自体を見直すか、追加指示で切り口を変えると、表現が固まりません。</p></div><div style="display:contents" dir="auto"><hr id="34e319c4-16c3-80b9-9f23-fe9a2a1416cf"/></div><div style="display:contents" dir="auto"><h2 id="34e319c4-16c3-80c0-b148-c508f04d636d" class="">最後に</h2></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-80a3-a362-f8828f466dc3" class="">10個のテンプレを並べましたが、最初から全部使う必要はありません。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-80b4-8777-e7dee43dbd1e" class="">業務の中で「ここに毎回時間を取られているな」と感じる場面が1つあれば、そこに当てはまるテンプレから試してみるのが一番自然な始め方です。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-8050-a0c7-f17b3a4b5c10" class="">使ってみて違和感のあった部分は、自分の業務に合わせてプロンプトを書き換えてください。テンプレは固定のものではなく、現場で育てていくものです。</p></div><div style="display:contents" dir="auto"><p id="34e319c4-16c3-8031-a53b-f4903e8a7c60" class="">何か気づいたことや、こういうテンプレも欲しい、という感想があれば、コメントで教えてください。</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
