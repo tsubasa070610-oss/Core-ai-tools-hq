@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leon | Bazi Master</title>
+    <script>
+        // ブラウザの言語設定を瞬時に取得
+        var userLang = navigator.language || navigator.userLanguage;
+        
+        // 日本語環境（ja または ja-JP）ならココナラへ直行
+        if (userLang.startsWith('ja')) {
+            window.location.replace("https://coconala.com/users/5041592?ref=service_main_column");
+        } else {
+            // 海外環境ならGumroadへ直行
+            window.location.replace("https://leonbazi.gumroad.com/");
+        }
+    </script>
+</head>
+<body style="background-color: #0d0d0d;">
+</body>
+</html>
